@@ -2,6 +2,17 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AboutHeading, AboutSection } from "./AboutComponents";
 import AchievementBar from "./achievement/AchievementBar";
+import GlassIcons from "./icons/GlassIcons";
+import {
+  FaJsSquare,
+  FaReact,
+  FaNodeJs,
+  FaJava,
+  FaPython,
+  FaHtml5,
+  FaCss3Alt,
+} from "react-icons/fa";
+import { SiExpress, SiMongodb } from "react-icons/si";
 import "./About.scss";
 
 const About = () => {
@@ -70,6 +81,18 @@ const About = () => {
     // },
   ];
 
+  const programmingSkillsItems = [
+    { icon: <FaJsSquare />, color: "javascript", label: "JavaScript" },
+    { icon: <FaReact />, color: "react", label: "React JS" },
+    { icon: <SiExpress />, color: "express", label: "Express JS" },
+    { icon: <FaNodeJs />, color: "node", label: "Node JS" },
+    { icon: <SiMongodb />, color: "mongodb", label: "MongoDB" },
+    { icon: <FaJava />, color: "java", label: "Core Java" },
+    { icon: <FaPython />, color: "python", label: "Python" },
+    { icon: <FaHtml5 />, color: "html", label: "HTML" },
+    { icon: <FaCss3Alt />, color: "css", label: "CSS" },
+  ];
+
   const aboutDetails = [
     // About Me
     <AboutSection key="about-me">
@@ -121,21 +144,26 @@ const About = () => {
     </AboutSection>,
 
     // Programming Skills
+    // <AboutSection key="programming-skills">
+    //   {programmingSkillsDetails.map((skill, index) => (
+    //     <div className="skill-parent" key={index}>
+    //       <div className="heading-bullet"></div>
+    //       <span>{skill.skill}</span>
+    //       <div className="skill-percentage">
+    //         <motion.div
+    //           initial={{ width: 0 }}
+    //           animate={{ width: `${skill.ratingPercentage}%` }}
+    //           transition={{ duration: 1, ease: "easeInOut" }}
+    //           className="active-percentage-bar"
+    //         />
+    //       </div>
+    //     </div>
+    //   ))}
+    // </AboutSection>,
     <AboutSection key="programming-skills">
-      {programmingSkillsDetails.map((skill, index) => (
-        <div className="skill-parent" key={index}>
-          <div className="heading-bullet"></div>
-          <span>{skill.skill}</span>
-          <div className="skill-percentage">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${skill.ratingPercentage}%` }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              className="active-percentage-bar"
-            />
-          </div>
-        </div>
-      ))}
+      <div className="skills-container">
+        <GlassIcons items={programmingSkillsItems} />
+      </div>
     </AboutSection>,
 
     // Projects
@@ -197,7 +225,7 @@ const About = () => {
         Me.
       </h2>
       <h3 className="about-subtitle">My Formal Bio Details</h3>
-      <div className="about-card">
+      <div className={`about-card ${selectedBulletIndex === 2 ? "projects-skills-active" : ""}`}>
         <div className="about-bullets">
           <div className="bullet-container">
             {aboutBullets.map((bullet, index) => (
