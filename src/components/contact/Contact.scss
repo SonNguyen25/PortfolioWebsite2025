@@ -1,0 +1,213 @@
+.contact-container {
+  background: transparent;
+  display: flex;
+  
+  flex-direction: column-reverse;
+  gap: 2.5rem;
+  overflow: hidden;
+  margin-top: 3rem;
+  justify-content: center; 
+  align-items: center;    
+  position: relative;
+  padding: 2rem;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 0;
+    gap: 4rem;
+  }
+
+  .phoneSvg {
+    position: absolute;
+    // top: 50%;
+    // left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+
+    svg {
+      width: 100%;
+      height: auto;
+      max-width: 450px;
+    }
+
+    path {
+      stroke: #db2777;
+      stroke-width: 0.2;
+      fill: none;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .form-container {
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    //   margin: 50px 50px 0 50px;
+    //   height: 100%;
+    background-color: rgba(26, 26, 26, 0.8);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    @media (min-width: 1024px) {
+      max-width: 40%;
+    }
+
+    .section-subtext {
+      font-size: 1rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-headtext {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      color: #fff;
+      background: linear-gradient(180deg, #c084fc, #db2777);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      label {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          font-size: 1rem;
+          color: #fff;
+          font-weight: 500;
+          margin-bottom: 1rem;
+          transition: color 0.3s ease;
+        }
+
+        input,
+        textarea {
+          background-color: rgba(42, 42, 42, 0.1);
+          padding: 1rem 1.5rem;
+          color: #fff;
+          border: 1px solid transparent;
+          border-radius: 0.5rem;
+          font-size: 1rem;
+          font-weight: 500;
+          outline: none;
+          transition: all 0.3s ease;
+
+          &::placeholder {
+            color: rgba(153, 153, 153, 0.7);
+          }
+
+          &:focus {
+            border-color: #c084fc;
+            box-shadow: 0 0 0 2px #db2777;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 120px;
+        }
+      }
+
+      .submit-button {
+        background-color: #c084fc;
+        padding: 0.75rem 2rem;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        &:hover {
+          background-color: #db2777;
+
+          &::before {
+            width: 100%;
+            height: 300px;
+          }
+        }
+
+        &:active {
+          transform: translateY(2px);
+        }
+      }
+    }
+  }
+
+  .canvas-container {
+    flex: 1;
+    height: 22rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      height: 34.375rem;
+    }
+
+    @media (min-width: 1024px) {
+      max-width: 50%;
+      height: 100%;
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.phoneSvg {
+  animation: float 6s ease-in-out infinite;
+}
+
+//   .form-container {
+// animation: pulse 4s ease-in-out infinite;
+//   }

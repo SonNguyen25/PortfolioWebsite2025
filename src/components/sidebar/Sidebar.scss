@@ -1,0 +1,69 @@
+@import "../../App.scss";
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+  
+  
+  .bg {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 400px;
+    background: white;
+
+    @include mobile {
+      width: 200px;
+    }
+
+    .links {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      
+       
+
+      a {
+        font-size: 40px;
+        position: relative;
+        text-decoration: none;
+        color: #000; 
+        transition: all 0.3s ease;
+        
+        @include mobile {
+          font-size: 20px;
+        }
+      }
+      a:hover {
+        background: linear-gradient(to right, #c084fc, #db2777);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+
+  button {
+    z-index: 999;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,15 @@
+$dark-purple-1: #10060f;
+$dark-purple-2: #2a1130;
+$neon-pink: rgba(255, 0, 255, 0.7);
+.stars-canvas {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, $dark-purple-1, $dark-purple-2);
+
+    canvas {
+      display: block;
+    }
+  }

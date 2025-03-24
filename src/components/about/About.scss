@@ -1,0 +1,674 @@
+@import "../../App.scss";
+
+$dark-purple-1: #10060f;
+$dark-purple-2: #2a1130;
+$neon-pink: rgba(255, 0, 255, 0.7);
+$gradient-start: #c084fc;
+$gradient-end: #db2777;
+$background-color: #121212;
+$text-color: #fff;
+$text-muted: rgba(255, 255, 255, 0.7);
+
+:root {
+  --blue-500: #3b82f6;
+  --primary-500: #6366f1;
+  --secondary-500: #ec4899;
+  --gradient-start: #{$gradient-start};
+  --gradient-end: #{$gradient-end};
+  --background-color: #{$background-color};
+  --text-color: #{$text-color};
+  --text-muted: #{$text-muted};
+}
+
+.about {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  padding: 100px 0;
+  background: transparent;
+  scroll-snap-type: y proximity;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mobile {
+    padding: 50px 0;
+  }
+
+  .about-me-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    // background-color: $background-color;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .about-me-image-container {
+      flex-shrink: 0;
+
+      img {
+        border: 4px solid var(--gradient-start);
+        border-radius: 10%;
+        object-fit: cover;
+        max-width: 100%;
+        height: auto;
+        
+        @include mobile {
+          max-width: 250px;
+          border-width: 3px;
+        }
+        // transition: transform 0.3s ease, filter 0.3s ease;
+        // will-change: transform, filter;
+      }
+      // img:hover {
+      //   transform: scale(1.2); /* Grows the image */
+      //   filter: brightness(1.2); /* Adds a slight focus effect */
+      // }
+    }
+
+    .about-me-content {
+      flex: 1;
+
+      .about-me-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-color);
+        text-align: justify;
+        
+        @include mobile {
+          font-size: 1rem;
+          text-align: left;
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+
+  .about-title {
+    font-size: 96px;
+    font-weight: 100;
+    text-align: center;
+    margin-bottom: 20px;
+    
+    @include mobile {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .about-subtitle {
+    font-size: 24px;
+    // font-weight: 100;
+    text-align: center;
+    margin-bottom: 40px;
+    
+    @include mobile {
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding: 0 15px;
+    }
+  }
+
+  .about-card {
+    display: flex;
+    // max-width: 1200px;
+    width: 80vw;
+    height: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, $dark-purple-1, $dark-purple-2);
+    // background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    // border-radius: 1.5px;
+    // border: 1px solid var(--primary-500);
+
+    @include mobile {
+      width: 90vw;
+      height: auto;
+      flex-direction: column;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1; 
+      border-radius: 16px; 
+      padding: 2px; 
+      background: linear-gradient(
+        135deg,
+        $gradient-start,
+        $gradient-end
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0); 
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+    }
+  }
+
+  .about-bullets {
+    flex: 1;
+    padding: 30px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    
+    @include mobile {
+      padding: 20px;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .bullet-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+      @include mobile {
+        gap: 15px;
+      }
+    }
+
+    .bullet {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 10px;
+      border-radius: 10px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &.selected-bullet {
+        background: linear-gradient(
+          to right,
+          $gradient-start,
+          $gradient-end
+        );
+      }
+
+      .bullet-logo {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        
+        @include mobile {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      span {
+        color: $text-color;
+        font-size: 18px;
+        
+        @include mobile {
+          font-size: 16px;
+        }
+      }
+      .about-me-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 1rem;
+
+        @media (min-width: 768px) {
+          flex-direction: row;
+          align-items: flex-start;
+        }
+
+        .about-me-image-container {
+          flex-shrink: 0;
+
+          img {
+            border: 4px solid $gradient-start;
+            
+            @include mobile {
+              border-width: 3px;
+            }
+          }
+        }
+
+        .about-me-content {
+          flex: 1;
+
+          .about-me-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: $text-color;
+            text-align: justify;
+            
+            @include mobile {
+              font-size: 1rem;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .about-bullet-details {
+    flex: 3;
+    padding: 30px;
+    color: $text-color;
+    
+    @include mobile {
+      padding: 20px;
+    }
+
+    .about-screen-container {
+      margin-bottom: 30px;
+      
+      @include mobile {
+        margin-bottom: 20px;
+      }
+    }
+
+    .about-heading {
+      margin-bottom: 20px;
+      
+      @include mobile {
+        margin-bottom: 15px;
+      }
+
+      .about-main-heading {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 5px;
+        // flex-wrap: wrap;
+        
+        @include mobile {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .heading-bullet {
+          width: 15px;
+          flex-shrink: 0;
+          height: 15px;
+          background: $gradient-end;
+          border-radius: 50%;
+          
+          @include mobile {
+            width: 12px;
+            height: 12px;
+          }
+        }
+
+        span {
+          font-size: 20px;
+          font-weight: bold;
+          max-width: calc(100% - 150px);
+          
+          @include mobile {
+            font-size: 18px;
+            max-width: calc(100% - 30px);
+          }
+        }
+
+        .heading-date {
+          font-size: 14px;
+          color: $gradient-start;
+          
+          @include mobile {
+            font-size: 12px;
+            width: 100%;
+            margin-left: 25px;
+          }
+        }
+      }
+
+      .about-sub-heading {
+        font-size: 16px;
+        color: $gradient-start;
+        margin-bottom: 5px;
+        
+        @include mobile {
+          font-size: 14px;
+        }
+      }
+
+      .about-heading-description {
+        font-size: 14px;
+        color: $text-muted;
+        
+        @include mobile {
+          font-size: 13px;
+        }
+      }
+    }
+
+    .skill-parent {
+      margin-bottom: 15px;
+
+      span {
+        font-size: 16px;
+        color: $text-color;
+        
+        @include mobile {
+          font-size: 14px;
+        }
+      }
+
+      .skill-percentage {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        margin-top: 5px;
+        overflow: hidden;
+        
+        @include mobile {
+          height: 8px;
+        }
+
+        .active-percentage-bar {
+          height: 100%;
+          background: linear-gradient(
+            to right,
+            $gradient-start,
+            $gradient-end
+          );
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+  .achievements-section {
+    margin-top: 3rem;
+    padding: 3rem;
+    // background: linear-gradient(135deg, $dark-purple-1, $dark-purple-2);
+    // border-radius: 1.25rem;
+    // box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate; 
+    
+    @include mobile {
+      margin-top: 2rem;
+      padding: 2rem 1rem;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, $gradient-start, $gradient-end, $gradient-start);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      background-size: 200% 200%;
+      animation: borderGradient 4s linear infinite;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      //   background: radial-gradient(
+      //   circle at 50% 50%,
+      //   rgba(255, 255, 255, 0.1) 0%,
+      //   transparent 50%
+      // );
+      z-index: 1;
+      opacity: 0.5;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    .achievements-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      background: linear-gradient(135deg, $gradient-start, $gradient-end, $gradient-start);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      z-index: 2;
+      
+      @include mobile {
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.05em;
+      }
+
+      // &::after {
+      //   content: "";
+      //   display: block;
+      //   width: 60px;
+      //   height: 3px;
+      //   background: linear-gradient(to right, #c084fc, #db2777);
+      //   margin: 0.5rem auto 0;
+      //   border-radius: 3px;
+      // }
+    }
+
+    .achievements-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      position: relative;
+      z-index: 2;
+      
+      @include mobile {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      @include mobile {
+        padding: 1.25rem;
+      }
+
+      &:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.06);
+        
+        @include mobile {
+          transform: translateY(-5px) scale(1.01);
+        }
+
+        .achievement-value {
+          color: $gradient-start;
+          transform: scale(1.1);
+          
+          @include mobile {
+            transform: scale(1.05);
+          }
+        }
+        .achievement-metric {
+          color: $gradient-end;
+        }
+      }
+
+      .achievement-value {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        background: linear-gradient(to right, $gradient-start, $gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        
+        @include mobile {
+          margin-bottom: 0.5rem;
+        }
+        
+        > span {
+          display: flex;
+          align-items: center;
+          background: inherit;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+
+          // Target the flex container for numbers
+          > div {
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            // Target each number container
+            > div {
+              background: inherit;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+
+              // Target the actual number divs
+              > div {
+                background: inherit;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-variant-numeric: tabular-nums;
+              }
+            }
+          }
+        }
+      }
+
+      .achievement-metric {
+        font-size: 1.1rem;
+        font-weight: 500;
+        opacity: 0.9;
+        transition: color 0.3s ease;
+        background: linear-gradient(to right, $gradient-start, $gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  // Animations
+  @keyframes borderGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  @keyframes glowPulse {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .achievements-section {
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+
+      .achievements-container {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .achievement-item {
+        padding: 1.25rem;
+
+        &:hover {
+          transform: translateY(-5px) scale(1.01);
+        }
+      }
+    }
+  }
+
+  // Add dark mode support
+  @media (prefers-color-scheme: dark) {
+    .achievements-section {
+      background: linear-gradient(
+        135deg,
+        adjust-color($dark-purple-1, $lightness: -5%),
+        adjust-color($dark-purple-2, $lightness: -5%)
+      );
+
+      .achievement-item {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 50px 0;
+
+    .about-card {
+      flex-direction: column;
+      height: auto;
+      width: 90vw;
+    }
+
+    .about-bullets {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+    }
+    
+    .about-bullet-details {
+      padding: 20px;
+    }
+  }
+}
+

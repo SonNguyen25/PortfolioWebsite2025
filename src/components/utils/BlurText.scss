@@ -1,0 +1,37 @@
+@import '../../App.scss';
+
+// .blur-text {
+//     font-size: 88px;
+    
+//     @include mobile {
+//       font-size: 36px;
+//     }
+//   }
+
+.blur-text-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    will-change: transform, opacity, filter;
+    
+    // Fix for mobile WebKit browsers
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    
+    .blur-text-element {
+      display: inline-block;
+      will-change: transform, opacity, filter;
+      
+      // Optimize for mobile rendering
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+  
+  // Force hardware acceleration on mobile
+  @media (max-width: 768px) {
+    .blur-text-container, 
+    .blur-text-element {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+  }

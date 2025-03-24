@@ -1,0 +1,180 @@
+@import "../../App.scss";
+
+$dark-purple-1: #10060f;
+$dark-purple-2: #2a1130;
+$neon-pink: rgba(255, 0, 255, 0.7);
+
+// $dark-purple-1: #1a0b1e;
+// $dark-purple-2: #2a1130;
+// $neon-pink: rgba(255, 105, 180, 0.3);
+
+@mixin neon-line {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 255, 0) 0%,
+    $neon-pink 50%,
+    rgba(255, 0, 255, 0) 100%
+  );
+  filter: blur(3px);
+  opacity: 0.8;
+}
+
+.intro {
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  background: linear-gradient(180deg, $dark-purple-1, $dark-purple-2);
+  position: relative;
+
+  background-image: linear-gradient(
+      210deg,
+      rgba(255, 0, 255, 0.2),
+      transparent 49%
+    ),
+    linear-gradient(48deg, rgba(183, 0, 255, 0.3), transparent 53%),
+    url("https://cdn.prod.website-files.com/652fd91d8a45c803a3d878f6/65b40bfdbedf6d0cfdd98a7c_waves%20white%20tr2.png"),
+    linear-gradient(212deg, #10060f, #2a1130);
+  background-position: 0 0, 0 0, 50% 30%, 0 0;
+  background-size: auto, auto, cover, auto;
+  background-attachment: scroll, scroll, scroll, scroll;
+  box-shadow: none;
+
+  &::before {
+    @include neon-line;
+    top: 0;
+  }
+
+  &::after {
+    @include neon-line;
+    bottom: 0;
+  }
+  .threejs-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // z-index: -1; // Send to background
+  }
+  .wrapper {
+    max-width: 1366px;
+    height: 100%;
+    margin: auto;
+
+    .text-container {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+
+      @include mobile {
+        width: 100%;
+        height: 50%;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
+      }
+
+      h2 {
+        display: inline-block;
+        font-size: 30px;
+        font-weight: bold;
+        background-image: linear-gradient(to right, #c084fc, #db2777, #c084fc);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shine 3s linear infinite;
+        letter-spacing: 10px;
+      }
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      h1 {
+        font-size: 88px;
+
+        @include mobile {
+          font-size: 36px;
+        }
+      }
+
+      .h1 {
+        font-size: 88px;
+
+        @include mobile {
+          font-size: 36px;
+        }
+      }
+
+      
+      
+
+      .buttons {
+        z-index: 2;
+        button {
+          padding: 20px;
+          border: 1px solid white;
+          border-radius: 10px;
+          background-color: transparent;
+          color: white;
+          margin-right: 20px;
+          cursor: pointer;
+          font-weight: 300;
+        }
+      }
+
+      img {
+        width: 50px;
+      }
+    }
+  }
+  .image-container {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+  
+
+    @include mobile {
+      height: 50%; // for image
+      // height: 50%; // for card
+      width: 100%;
+      top: unset;
+      bottom: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 170%;
+      margin-top: 20px;
+      object-fit: contain;
+
+    }
+  }
+
+  .sliding-text-container {
+    position: absolute;
+    font-size: 50vh;
+    bottom: -120px;
+    white-space: nowrap;
+    color: #ffffff20;
+    width: 200%;
+    font-weight: bold;
+    z-index: 1;
+  }
+  span {
+    flex: 0 0 100%;
+  }
+}
+
