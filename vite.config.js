@@ -60,11 +60,20 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
+          
+          // if (id.includes("three") || id.includes("drei")) {
+          //   return "three-chunks";
+          // }
+          if (id.includes('node_modules/three') || 
+              id.includes('node_modules/@react-three') || id.includes("drei")) {
+            return 'three-vendor';
+          }
+          if (id.includes('node_modules/framer-motion') || 
+              id.includes('node_modules/gsap')) {
+            return 'animation-vendor';
+          }
           if (id.includes("node_modules")) {
             return "vendor";
-          }
-          if (id.includes("three") || id.includes("drei")) {
-            return "three-chunks";
           }
           if (id.includes("/fonts/")) {
             return "fonts";
