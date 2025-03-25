@@ -87,7 +87,8 @@ const EarthCanvas = () => {
   }, []);
 
   return (
-    <Canvas
+    <>
+      {!isMobile && (<Canvas
       shadows
       frameloop="demand"
       // dpr={[1, 2]}
@@ -114,7 +115,9 @@ const EarthCanvas = () => {
         <Preload all />
       </Suspense>
     </Canvas>
-  );
+  )}
+  </>
+);
 };
 
 export default EarthCanvas;
