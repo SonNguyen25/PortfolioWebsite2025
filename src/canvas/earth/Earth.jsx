@@ -84,7 +84,7 @@ const EarthCanvas = () => {
       frameloop="demand"
       // dpr={[1, 2]}
       dpr={dprValue}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ preserveDrawingBuffer: false }}
       camera={{
         fov: 45,
         near: 0.1,
