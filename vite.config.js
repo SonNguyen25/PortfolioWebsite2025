@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, splitVendorChunkPlugin } from "vite";
 import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
 import imagemin from "vite-plugin-imagemin";
@@ -14,8 +14,27 @@ export default defineConfig({
           '@babel/plugin-transform-runtime'
         ]
       },
+      swcConfig: {
+        sourceMaps: false,
+        minify: true,
+        jsc: {
+          target: 'es2018',
+          compress: {
+            drop_console: true,
+            dead_code: true,
+          },
+          // Tree shaking and optimization
+          transform: {
+            react: {
+              runtime: 'automatic',
+              development: false
+            }
+          }
+        }
+      },
       fastRefresh: true,
     }),
+    splitVendorChunkPlugin(),
     // viteCompression({
     //   algorithm: "brotli",
     //   ext: ".br",
@@ -68,13 +87,16 @@ export default defineConfig({
   build: {
     // minify: 'esbuild',
     // target: 'es2018',
-    target: ['ios14'],
+    target: ['ios14', 'es2018', 'chrome90', 'safari15'],
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log']
+        pure_funcs: ['console.log'],
+        unused: true,
+        dead_code: true,
+        reduce_vars: true
       },
       format: {
         comments: false
@@ -109,8 +131,12 @@ export default defineConfig({
     },
     chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     assetsInlineLimit: 4096,
+    reportCompressedSize: false,
+    dynamicImportVarsOptions: {
+      exclude: [/node_modules/]
+    },
   },
   optimizeDeps: {
     include: [
