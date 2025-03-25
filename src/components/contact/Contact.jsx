@@ -1,10 +1,11 @@
 import "./Contact.scss";
-
+import React from "react";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import EarthCanvas from "../../canvas/earth/Earth";
-import "./Contact.scss";
+// import EarthCanvas from "../../canvas/earth/Earth";
+
+const EarthCanvas = React.lazy(()=>import('../../canvas/earth/Earth'));
 
 const slideIn = (direction, type, delay, duration) => {
   return {

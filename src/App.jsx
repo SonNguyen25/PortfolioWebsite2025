@@ -1,14 +1,16 @@
+import { lazy } from "react";
 import "./App.scss";
-import Navbar from "./components/navbar/Navbar";
-import Intro from "./components/intro/Intro";
-import Parallax from "./components/parallax/Parallax";
-import Experiences from "./components/experiences/Experiences";
-import About from "./components/about/About";
-import StarsCanvas from "./canvas/stars/Stars";
-import Contact from "./components/contact/Contact";
 // import EarthCanvas from "./canvas/earth/Earth";
-import Portfolio from "./components/portfolio/Portfolio";
-import Footer from "./components/footer/Footer";
+
+const Portfolio = lazy(() => import("./components/portfolio/Portfolio"));
+const Footer = lazy(() => import("./components/footer/Footer"));
+const Navbar = lazy(() => import("./components/navbar/Navbar"));
+const Intro = lazy(() => import("./components/intro/Intro"));
+const Parallax = lazy(() => import("./components/parallax/Parallax"));
+const About = lazy(() => import("./components/about/About"));
+const Experiences = lazy(() => import("./components/experiences/Experiences"));
+const Contact = lazy(() => import("./components/contact/Contact"));
+const StarsCanvas = lazy(()=>import('./canvas/stars/Stars'));
 
 const App = () => {
   return (
