@@ -23,37 +23,37 @@ const CanvasLoader = () => {
 const Earth = () => {
   const earth = useGLTF("/animations/scene.gltf");
 
-  const cleanMaterial = useMemo(
-    () => (material) => {
-      material.dispose();
-      // Dispose textures if available.
-      for (const key in material) {
-        const value = material[key];
-        if (value && value.dispose) {
-          value.dispose();
-        }
-      }
-    },
-    []
-  );
+  // const cleanMaterial = useMemo(
+  //   () => (material) => {
+  //     material.dispose();
+  //     // Dispose textures if available.
+  //     for (const key in material) {
+  //       const value = material[key];
+  //       if (value && value.dispose) {
+  //         value.dispose();
+  //       }
+  //     }
+  //   },
+  //   []
+  // );
 
-  useEffect(() => {
-    return () => {
-      // Traverse the scene and dispose of geometries and materials.
-      earth.scene.traverse((child) => {
-        if (child.isMesh) {
-          child.geometry.dispose();
-          if (child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat) => cleanMaterial(mat));
-            } else {
-              cleanMaterial(child.material);
-            }
-          }
-        }
-      });
-    };
-  }, [earth, cleanMaterial]);
+  // useEffect(() => {
+  //   return () => {
+  //     // Traverse the scene and dispose of geometries and materials.
+  //     earth.scene.traverse((child) => {
+  //       if (child.isMesh) {
+  //         child.geometry.dispose();
+  //         if (child.material) {
+  //           if (Array.isArray(child.material)) {
+  //             child.material.forEach((mat) => cleanMaterial(mat));
+  //           } else {
+  //             cleanMaterial(child.material);
+  //           }
+  //         }
+  //       }
+  //     });
+  //   };
+  // }, [earth, cleanMaterial]);
 
   const memoizedScene = useMemo(() => {
     const clonedScene = earth.scene.clone();
@@ -94,7 +94,7 @@ const EarthCanvas = () => {
       // dpr={[1, 2]}
       dpr={dprValue}
       gl={{ preserveDrawingBuffer: false,
-        powerPreference: "low-power"
+        // powerPreference: "low-power"
        }}
       camera={{
         fov: 45,
