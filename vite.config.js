@@ -6,7 +6,15 @@ import imagemin from "vite-plugin-imagemin";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Optimize React runtime
+      babel: {
+        plugins: [
+          'babel-plugin-transform-react-remove-prop-types',
+          '@babel/plugin-transform-runtime'
+        ]
+      }
+    }),
     // viteCompression({
     //   algorithm: "brotli",
     //   ext: ".br",
@@ -50,12 +58,19 @@ export default defineConfig({
     // }),
   ],
 
-  assetsInclude: ["**/*.glb"],
+  assetsInclude: ["**/*.glb", "**/*.gltf"],
   build: {
     // minify: 'esbuild',
     // target: 'es2018',
     target: 'esnext',
-    minify: 'esbuild',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log']
+      }
+    },
     sourcemap: false,
     rollupOptions: {
       output: {
@@ -71,14 +86,19 @@ export default defineConfig({
           if (id.includes("three") || id.includes("drei")) {
             return "three-chunks";
           }
+          if (id.includes("framer-motion")) {
+            return "motion-chunks";
+          }
           if (id.includes("/fonts/")) {
             return "fonts";
           }
         },
       },
     },
+    chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
     chunkSizeWarningLimit: 1500,
-    assetsInlineLimit: 4096,
+    assetsInlineLimit: 2048,
   },
   optimizeDeps: {
     include: [
@@ -91,6 +111,12 @@ export default defineConfig({
       "react-three-fiber",
       "three-stdlib",
     ],
+    exclude: [
+      "@testing-library/react",
+      "@types/react",
+      "jest"
+    ]
+
   },
   resolve: {
     alias: {
@@ -99,4 +125,17 @@ export default defineConfig({
       "framer-motion": "framer-motion",
     },
   },
+  server: {
+    // Reduce memory usage
+    warmup: {
+      clientFiles: ['./src/main.jsx', './src/App.jsx']
+    },
+    // Faster startup
+    strictPort: true,
+    // Optimize for mobile network conditions
+    hmr: {
+      overlay: false
+    }
+  },
+
 });
