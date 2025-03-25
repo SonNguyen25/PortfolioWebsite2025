@@ -61,16 +61,25 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
+          if (id.includes('node_modules')) {
+            if (id.includes('three') || 
+                id.includes('react-three') || 
+                id.includes('three-stdlib')) {
+              return 'three-vendor';
+            }
+            if (id.includes('@react')) {
+              return 'react-vendor';
+            }
+            return 'vendor';
           }
-          if (id.includes("three") || id.includes("drei")) {
-            return "three-chunks";
+          if (id.includes('/fonts/')) {
+            return 'fonts';
           }
         },
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
+    assetsInlineLimit: 4096,
   },
   optimizeDeps: {
     include: [
@@ -78,6 +87,8 @@ export default defineConfig({
       "react-dom",
       "framer-motion",
       "three",
+      'react-three-fiber',
+      'three-stdlib',
       "@react-three/drei",
       "@react-three/fiber",
     ],

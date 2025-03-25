@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { lazy } from "react";
+import React, { lazy, useState, useEffect } from "react";
 import "./Intro.scss";
 // import Lanyard from "../utils/Lanyard";
 
@@ -10,6 +10,16 @@ import "./Intro.scss";
 const BlurText = lazy(() => import('../utils/BlurText'));
 
 const Intro = React.memo(() => {
+  const [imageSrc, setImageSrc] = useState('/scroll.png');
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/noback9kv2-2-3 (2).png";
+    img.onload = () => {
+      setImageSrc("/noback9kv2-2-3 (2).png");
+    };
+  }, []);
+
   const textVariants = React.useMemo(() => ({
     initial: {
       x: -500,
@@ -98,10 +108,11 @@ const Intro = React.memo(() => {
         <picture>
           <source srcSet={"/noback9kv2-2-3 (2).png"} type="image/webp" />
           <img
-            src={"/noback9kv2-2-3 (2).png"}
-            alt={""}
-            loading="lazy"
-            decoding="async"
+            src={imageSrc}
+            alt="Son Nguyen"
+            loading="eager"
+            // loading="lazy"
+            // decoding="async"
           />
         </picture>
         {/* <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} /> */}
