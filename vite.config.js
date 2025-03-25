@@ -80,6 +80,9 @@ export default defineConfig({
 
   assetsInclude: ["**/*.glb", "**/*.gltf", "**/*.woff", "**/*.woff2"],
   build: {
+    commonjsOptions: {
+      strictRequires: true,
+    },
     // minify: 'esbuild',
     // target: 'es2018',
     target: ["ios14", "es2018", "chrome90", "safari15"],
@@ -100,47 +103,58 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        // manualChunks: {
-        //   drei: ['@react-three/drei'],
-        //   three: ['three'],
-        //   framer: ['framer-motion'],
-        // }
-        manualChunks(id) {
-          // if (
-          //   id.includes("node_modules/react") ||
-          //   id.includes("node_modules/react-dom") ||
-          //   id.includes("node_modules/scheduler") ||
-          //   id.includes("node_modules/use-sync-external-store")
-          // ) {
-          //   return "react-vendor";
-          // }
-
-          // Three.js and related packages
-          if (id.includes("node_modules/three")) {
-            return "three-vendor";
-          }
-          if (
-            id.includes("@react-three/drei") ||
-            id.includes("@react-three/fiber")
-          ) {
-            return "three-react-vendor";
-          }
-
-          // Animation libraries - dependent on React, so keep them separate
-          if (id.includes("framer-motion")) {
-            return "animation-vendor";
-          }
-
-          // All other node_modules
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-
-          // Fonts in their own chunk
-          if (id.includes("/fonts/")) {
-            return "fonts";
-          }
+        manualChunks: {
+          // Bundle React and all related libraries together
+          'react-vendor': [
+            'react', 
+            'react-dom',
+            'react/jsx-runtime',
+            'scheduler',
+            'use-sync-external-store',
+          ],
+          // Three.js in its own chunk
+          'three-vendor': ['three'],
+          // UI animation libraries
+          'animation': ['framer-motion'],
+          // React-three packages
+          'react-three': ['@react-three/drei', '@react-three/fiber'],
         },
+        // manualChunks(id) {
+        //   // if (
+        //   //   id.includes("node_modules/react") ||
+        //   //   id.includes("node_modules/react-dom") ||
+        //   //   id.includes("node_modules/scheduler") ||
+        //   //   id.includes("node_modules/use-sync-external-store")
+        //   // ) {
+        //   //   return "react-vendor";
+        //   // }
+
+        //   // Three.js and related packages
+        //   if (id.includes("node_modules/three")) {
+        //     return "three-vendor";
+        //   }
+        //   if (
+        //     id.includes("@react-three/drei") ||
+        //     id.includes("@react-three/fiber")
+        //   ) {
+        //     return "three-react-vendor";
+        //   }
+
+        //   // Animation libraries - dependent on React, so keep them separate
+        //   if (id.includes("framer-motion")) {
+        //     return "animation-vendor";
+        //   }
+
+        //   // All other node_modules
+        //   if (id.includes("node_modules")) {
+        //     return "vendor";
+        //   }
+
+        //   // Fonts in their own chunk
+        //   if (id.includes("/fonts/")) {
+        //     return "fonts";
+        //   }
+        // },
       },
     },
     chunkFileNames: "assets/[name]-[hash].js",
