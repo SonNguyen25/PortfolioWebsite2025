@@ -111,17 +111,20 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
+          if (id.includes('node_modules/three')) {
+            return 'three-core';
           }
-          if (id.includes("three") || id.includes("drei")) {
-            return "three-chunks";
+          if (id.includes('@react-three/drei') || id.includes('@react-three/fiber')) {
+            return 'three-react';
           }
-          if (id.includes("framer-motion")) {
-            return "motion-chunks";
+          if (id.includes('framer-motion')) {
+            return 'animation';
           }
-          if (id.includes("react")) {
-            return "react-chunks";
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react';
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor';
           }
           if (id.includes("/fonts/")) {
             return "fonts";
