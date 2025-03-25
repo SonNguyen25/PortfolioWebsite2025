@@ -76,17 +76,17 @@ const Intro = React.memo(() => {
         >
           <motion.h3 variants={textVariants}>Hi, I&apos;m</motion.h3>
           <motion.h2 variants={textVariants}>SON NGUYEN</motion.h2>
-          {/* <motion.h1 variants={textVariants}> */}
-          <BlurText
+          <motion.h1 variants={textVariants}>
+          {/* <BlurText
             text="Full Stack and Web Developer"
             delay={150}
             animateBy="words"
             direction="top"
             // onAnimationComplete={handleAnimationComplete}
             className="blur-text"
-          />
+          /> */}
           {/* Full Stack and Web Developer */}
-          {/* </motion.h1> */}
+          </motion.h1>
           <motion.div variants={textVariants} className="buttons">
             <motion.button variants={textVariants}>
               See my Latest Works
