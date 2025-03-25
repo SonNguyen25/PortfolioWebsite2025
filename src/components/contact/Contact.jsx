@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 // import EarthCanvas from "../../canvas/earth/Earth";
 
-const EarthCanvas = lazy(()=>import('../../canvas/earth/Earth'));
+const EarthCanvas = lazy(() => import("../../canvas/earth/Earth"));
 
 const slideIn = (direction, type, delay, duration) => {
   return {
@@ -188,14 +188,16 @@ const Contact = () => {
         </form>
       </motion.div>
 
-      <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
-        className="canvas-container"
-        initial="initial"
-        animate={isPhoneSvgComplete ? "animate" : "initial"}
-      >
-        <EarthCanvas />
-      </motion.div>
+      <Suspense fallback={<div>Loading 3D scene...</div>}>
+        <motion.div
+          variants={slideIn("right", "tween", 0.2, 1)}
+          className="canvas-container"
+          initial="initial"
+          animate={isPhoneSvgComplete ? "animate" : "initial"}
+        >
+          <EarthCanvas />
+        </motion.div>
+      </Suspense>
     </div>
   );
 };

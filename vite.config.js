@@ -54,6 +54,9 @@ export default defineConfig({
   build: {
     // minify: 'esbuild',
     // target: 'es2018',
+    target: 'esnext',
+    minify: 'esbuild',
+    sourcemap: false,
     rollupOptions: {
       output: {
         // manualChunks: {
