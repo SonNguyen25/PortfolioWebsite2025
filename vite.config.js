@@ -13,7 +13,8 @@ export default defineConfig({
           'babel-plugin-transform-react-remove-prop-types',
           '@babel/plugin-transform-runtime'
         ]
-      }
+      },
+      fastRefresh: true,
     }),
     // viteCompression({
     //   algorithm: "brotli",
@@ -58,17 +59,25 @@ export default defineConfig({
     // }),
   ],
 
-  assetsInclude: ["**/*.glb", "**/*.gltf"],
+  assetsInclude: [
+    "**/*.glb", 
+    "**/*.gltf", 
+    "**/*.woff", 
+    "**/*.woff2"
+  ],
   build: {
     // minify: 'esbuild',
     // target: 'es2018',
-    target: 'esnext',
+    target: ['ios14'],
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
         pure_funcs: ['console.log']
+      },
+      format: {
+        comments: false
       }
     },
     sourcemap: false,
@@ -89,6 +98,9 @@ export default defineConfig({
           if (id.includes("framer-motion")) {
             return "motion-chunks";
           }
+          if (id.includes("react")) {
+            return "react-chunks";
+          }
           if (id.includes("/fonts/")) {
             return "fonts";
           }
@@ -97,8 +109,8 @@ export default defineConfig({
     },
     chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-    chunkSizeWarningLimit: 1500,
-    assetsInlineLimit: 2048,
+    chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 4096,
   },
   optimizeDeps: {
     include: [
@@ -123,6 +135,7 @@ export default defineConfig({
       react: "react",
       "react-dom": "react-dom",
       "framer-motion": "framer-motion",
+      'three': 'three',
     },
   },
   server: {
@@ -137,5 +150,17 @@ export default defineConfig({
       overlay: false
     }
   },
+  worker: {
+    format: 'es',
+    plugins: [
+      react()
+    ]
+  },
+  performance: {
+    hints: 'warning',
+    maxEntrypointSize: 1024000, // ~1MB
+    maxAssetSize: 512000 // ~512KB
+  }
+
 
 });
