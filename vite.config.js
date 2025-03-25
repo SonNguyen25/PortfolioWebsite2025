@@ -61,17 +61,11 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Big libraries get their own chunks
-            if (id.includes('three') || 
-                id.includes('react-three') || 
-                id.includes('three-stdlib')) {
-              return 'three-vendor';
-            }
-            if (id.includes('@react')) {
-              return 'react-vendor';
-            }
-            return 'vendor';
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+          if (id.includes("three") || id.includes("drei")) {
+            return "three-chunks"
           }
           if (id.includes('/fonts/')) {
             return 'fonts';

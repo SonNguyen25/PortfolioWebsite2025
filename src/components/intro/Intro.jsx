@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { lazy } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import "./Intro.scss";
 // import Lanyard from "../utils/Lanyard";
 
@@ -10,6 +10,16 @@ import "./Intro.scss";
 const BlurText = lazy(() => import('../utils/BlurText'));
 
 const Intro = React.memo(() => {
+  const [imageSrc, setImageSrc] = useState('/eye.svg');
+ 
+   useEffect(() => {
+     const img = new Image();
+     img.src = "/noback9kv2-2-3 (2).png";
+     img.onload = () => {
+       setImageSrc("/noback9kv2-2-3 (2).png");
+     };
+   }, []);
+ 
   
   const textVariants = React.useMemo(() => ({
     initial: {
