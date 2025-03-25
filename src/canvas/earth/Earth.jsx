@@ -22,6 +22,34 @@ const CanvasLoader = () => {
 
 const Earth = () => {
   const earth = useGLTF("/animations/scene.gltf");
+  useEffect(() => {
+    return () => {
+      // Traverse the scene and dispose of geometries and materials.
+      earth.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((mat) => cleanMaterial(mat));
+            } else {
+              cleanMaterial(child.material);
+            }
+          }
+        }
+      });
+    };
+  }, [earth]);
+  
+  const cleanMaterial = (material) => {
+    material.dispose();
+    // Dispose textures if available.
+    for (const key in material) {
+      const value = material[key];
+      if (value && value.dispose) {
+        value.dispose();
+      }
+    }
+  };
 
   return (
     <primitive object={earth.scene} scale={2.5} position-y={0} rotation-y={0} />
@@ -31,6 +59,10 @@ const Earth = () => {
 const EarthCanvas = () => {
   const controlsRef = useRef();
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const dprValue = isMobile ? [0.5, 0.75] : [1, 2];
+
+  
   useEffect(() => {
     if (controlsRef.current) {
       controlsRef.current.autoRotate = true;
@@ -38,12 +70,20 @@ const EarthCanvas = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (controlsRef.current) {
+      controlsRef.current.autoRotate = true;
+      controlsRef.current.update();
+    }
+  }, []);
+
+
   return (
     <Canvas
       shadows
       frameloop="demand"
       // dpr={[1, 2]}
-      dpr={[0.5,1]}
+      dpr={dprValue}
       gl={{ preserveDrawingBuffer: true }}
       camera={{
         fov: 45,
@@ -54,6 +94,7 @@ const EarthCanvas = () => {
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
+        ref={controlsRef} 
           autoRotate
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}

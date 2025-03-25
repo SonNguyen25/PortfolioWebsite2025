@@ -2,6 +2,7 @@
 import { useState, useRef, Suspense} from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Points, PointMaterial, Preload } from '@react-three/drei'
+import { useInView } from "react-intersection-observer";
 import * as random from "maath/random/dist/maath-random.esm";
 import "./Stars.scss";
 
@@ -30,14 +31,21 @@ const Stars = (props) => {
   };
   
   const StarsCanvas = () => {
+    const { ref, inView } = useInView({
+      triggerOnce: true,
+      threshold: 0.1,
+    });
+  
     return (
-      <div className="stars-canvas">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <Suspense fallback={null}>
-            <Stars />
-          </Suspense>
-          <Preload all />
-        </Canvas>
+      <div className="stars-canvas" ref={ref}>
+        {inView && (
+          <Canvas camera={{ position: [0, 0, 1] }}>
+            <Suspense fallback={null}>
+              <Stars />
+            </Suspense>
+            <Preload all />
+          </Canvas>
+        )}
       </div>
     );
   };
