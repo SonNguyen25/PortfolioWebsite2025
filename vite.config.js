@@ -52,7 +52,7 @@ export default defineConfig({
 
   assetsInclude: ["**/*.glb"],
   build: {
-    minify: 'esbuild',
+    // minify: 'esbuild',
     // target: 'es2018',
     rollupOptions: {
       output: {

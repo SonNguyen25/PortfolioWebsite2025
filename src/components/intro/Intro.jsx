@@ -103,7 +103,7 @@ const Intro = React.memo(() => {
           )}
         </motion.div>
       </div>
-      <motion.div
+      {/* <motion.div
         className="sliding-text-container"
         variants={sliderVariants}
         initial="initial"
@@ -111,7 +111,7 @@ const Intro = React.memo(() => {
       >
         <span>Front-end Back-end React Node.js Java Python&nbsp;</span>
         <span>Front-end Back-end React Node.js Java Python</span>
-      </motion.div>
+      </motion.div> */}
       <div className="image-container">
         {/* <img src="/noback9kv2-2-3 (2).png" alt="" /> */}
         <picture>
