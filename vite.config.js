@@ -14,24 +14,24 @@ export default defineConfig({
           '@babel/plugin-transform-runtime'
         ]
       },
-      swcConfig: {
-        sourceMaps: false,
-        minify: true,
-        jsc: {
-          target: 'es2018',
-          compress: {
-            drop_console: true,
-            dead_code: true,
-          },
-          // Tree shaking and optimization
-          transform: {
-            react: {
-              runtime: 'automatic',
-              development: false
-            }
-          }
-        }
-      },
+      // swcConfig: {
+      //   sourceMaps: false,
+      //   minify: true,
+      //   jsc: {
+      //     target: 'es2018',
+      //     compress: {
+      //       drop_console: true,
+      //       dead_code: true,
+      //     },
+      //     // Tree shaking and optimization
+      //     transform: {
+      //       react: {
+      //         runtime: 'automatic',
+      //         development: false
+      //       }
+      //     }
+      //   }
+      // },
       fastRefresh: true,
     }),
     splitVendorChunkPlugin(),
@@ -136,6 +136,13 @@ export default defineConfig({
     reportCompressedSize: false,
     dynamicImportVarsOptions: {
       exclude: [/node_modules/]
+    },
+    modulePreload: {
+      polyfill: true,
+      resolveDependencies: (url, deps, context) => {
+        // Don't prefetch everything at once
+        return deps.filter(dep => !dep.includes('three') && !dep.includes('framer-motion'));
+      },
     },
   },
   optimizeDeps: {
