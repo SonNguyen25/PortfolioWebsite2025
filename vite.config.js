@@ -10,9 +10,9 @@ export default defineConfig({
       // Optimize React runtime
       babel: {
         plugins: [
-          'babel-plugin-transform-react-remove-prop-types',
-          '@babel/plugin-transform-runtime'
-        ]
+          "babel-plugin-transform-react-remove-prop-types",
+          "@babel/plugin-transform-runtime",
+        ],
       },
       // swcConfig: {
       //   sourceMaps: false,
@@ -78,29 +78,24 @@ export default defineConfig({
     // }),
   ],
 
-  assetsInclude: [
-    "**/*.glb", 
-    "**/*.gltf", 
-    "**/*.woff", 
-    "**/*.woff2"
-  ],
+  assetsInclude: ["**/*.glb", "**/*.gltf", "**/*.woff", "**/*.woff2"],
   build: {
     // minify: 'esbuild',
     // target: 'es2018',
-    target: ['ios14', 'es2018', 'chrome90', 'safari15'],
-    minify: 'terser',
+    target: ["ios14", "es2018", "chrome90", "safari15"],
+    minify: "terser",
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log'],
+        pure_funcs: ["console.log"],
         unused: true,
         dead_code: true,
-        reduce_vars: true
+        reduce_vars: true,
       },
       format: {
-        comments: false
-      }
+        comments: false,
+      },
     },
     sourcemap: false,
     rollupOptions: {
@@ -111,40 +106,58 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
-          if (id.includes('node_modules/three')) {
-            return 'three-core';
+          if (
+            id.includes("node_modules/react") ||
+            id.includes("node_modules/react-dom") ||
+            id.includes("node_modules/scheduler") ||
+            id.includes("node_modules/use-sync-external-store")
+          ) {
+            return "react-vendor";
           }
-          if (id.includes('@react-three/drei') || id.includes('@react-three/fiber')) {
-            return 'three-react';
+
+          // Three.js and related packages
+          if (id.includes("node_modules/three")) {
+            return "three-vendor";
           }
-          if (id.includes('framer-motion')) {
-            return 'animation';
+          if (
+            id.includes("@react-three/drei") ||
+            id.includes("@react-three/fiber")
+          ) {
+            return "three-react-vendor";
           }
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-            return 'react';
+
+          // Animation libraries - dependent on React, so keep them separate
+          if (id.includes("framer-motion")) {
+            return "animation-vendor";
           }
-          if (id.includes('node_modules')) {
-            return 'vendor';
+
+          // All other node_modules
+          if (id.includes("node_modules")) {
+            return "vendor";
           }
+
+          // Fonts in their own chunk
           if (id.includes("/fonts/")) {
             return "fonts";
           }
         },
       },
     },
-    chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
+    chunkFileNames: "assets/[name]-[hash].js",
+    entryFileNames: "assets/[name]-[hash].js",
     chunkSizeWarningLimit: 500,
     assetsInlineLimit: 4096,
     reportCompressedSize: false,
     dynamicImportVarsOptions: {
-      exclude: [/node_modules/]
+      exclude: [/node_modules/],
     },
     modulePreload: {
       polyfill: true,
       resolveDependencies: (url, deps, context) => {
         // Don't prefetch everything at once
-        return deps.filter(dep => !dep.includes('three') && !dep.includes('framer-motion'));
+        return deps.filter(
+          (dep) => !dep.includes("three") && !dep.includes("framer-motion")
+        );
       },
     },
   },
@@ -159,44 +172,35 @@ export default defineConfig({
       "react-three-fiber",
       "three-stdlib",
     ],
-    exclude: [
-      "@testing-library/react",
-      "@types/react",
-      "jest"
-    ]
-
+    exclude: ["@testing-library/react", "@types/react", "jest"],
   },
   resolve: {
     alias: {
       react: "react",
       "react-dom": "react-dom",
       "framer-motion": "framer-motion",
-      'three': 'three',
+      three: "three",
     },
   },
   server: {
     // Reduce memory usage
     warmup: {
-      clientFiles: ['./src/main.jsx', './src/App.jsx']
+      clientFiles: ["./src/main.jsx", "./src/App.jsx"],
     },
     // Faster startup
     strictPort: true,
     // Optimize for mobile network conditions
     hmr: {
-      overlay: false
-    }
+      overlay: false,
+    },
   },
   worker: {
-    format: 'es',
-    plugins: [
-      react()
-    ]
+    format: "es",
+    plugins: [react()],
   },
   performance: {
-    hints: 'warning',
+    hints: "warning",
     maxEntrypointSize: 1024000, // ~1MB
-    maxAssetSize: 512000 // ~512KB
-  }
-
-
+    maxAssetSize: 512000, // ~512KB
+  },
 });
