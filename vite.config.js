@@ -7,16 +7,16 @@ import imagemin from "vite-plugin-imagemin";
 export default defineConfig({
   plugins: [
     react(),
-    viteCompression({
-      algorithm: "brotli",
-      ext: ".br",
-      deleteOriginFile: false,
-    }),
-    viteCompression({
-      algorithm: "gzip",
-      ext: ".gz",
-      deleteOriginFile: false,
-    }),
+    // viteCompression({
+    //   algorithm: "brotli",
+    //   ext: ".br",
+    //   deleteOriginFile: false,
+    // }),
+    // viteCompression({
+    //   algorithm: "gzip",
+    //   ext: ".gz",
+    //   deleteOriginFile: false,
+    // }),
     imagemin({
       gifsicle: {
         optimizationLevel: 7,
