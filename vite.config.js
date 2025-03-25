@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
-import imagemin from 'vite-plugin-imagemin';
+import imagemin from "vite-plugin-imagemin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -35,11 +35,11 @@ export default defineConfig({
       svgo: {
         plugins: [
           {
-            name: 'removeViewBox',
+            name: "removeViewBox",
             active: false,
           },
           {
-            name: 'removeEmptyAttrs',
+            name: "removeEmptyAttrs",
             active: false,
           },
         ],
@@ -49,7 +49,6 @@ export default defineConfig({
       },
     }),
   ],
-
 
   assetsInclude: ["**/*.glb"],
   build: {
@@ -65,15 +64,16 @@ export default defineConfig({
             return "vendor";
           }
           if (id.includes("three") || id.includes("drei")) {
-            return "three-chunks"
+            return "three-chunks";
           }
-          if (id.includes('/fonts/')) {
-            return 'fonts';
+          if (id.includes("/fonts/")) {
+            return "fonts";
           }
         },
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
+    assetsInlineLimit: 4096,
   },
   optimizeDeps: {
     include: [
@@ -83,13 +83,15 @@ export default defineConfig({
       "three",
       "@react-three/drei",
       "@react-three/fiber",
+      "react-three-fiber",
+      "three-stdlib",
     ],
   },
   resolve: {
     alias: {
-      'react': 'react',
-      'react-dom': 'react-dom',
-      'framer-motion': 'framer-motion'
-    }
+      react: "react",
+      "react-dom": "react-dom",
+      "framer-motion": "framer-motion",
+    },
   },
 });

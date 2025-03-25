@@ -74,6 +74,7 @@ $neon-pink: rgba(255, 0, 255, 0.7);
       flex-direction: column;
       justify-content: center;
       gap: 40px;
+      will-change: transform, opacity;
 
       @include mobile {
         width: 100%;

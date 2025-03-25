@@ -11,6 +11,12 @@ const BlurText = lazy(() => import('../utils/BlurText'));
 
 const Intro = React.memo(() => {
   const [imageSrc, setImageSrc] = useState('/eye.svg');
+  const [startNonCritical, setStartNonCritical] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setStartNonCritical(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
  
    useEffect(() => {
      const img = new Image();
@@ -87,12 +93,14 @@ const Intro = React.memo(() => {
             </motion.button>
             <motion.button variants={textVariants}>Get in Touch</motion.button>
           </motion.div>
+          {startNonCritical && (
           <motion.img
             variants={textVariants}
             animate="scrollAnimation"
             src="/scroll.png"
             alt=""
-          />
+            />
+          )}
         </motion.div>
       </div>
       <motion.div
