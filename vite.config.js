@@ -52,6 +52,8 @@ export default defineConfig({
 
   assetsInclude: ["**/*.glb"],
   build: {
+    minify: 'esbuild',
+    target: 'es2018',
     rollupOptions: {
       output: {
         // manualChunks: {
