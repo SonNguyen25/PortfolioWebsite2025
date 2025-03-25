@@ -79,7 +79,7 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1500,
-    assetsInlineLimit: 4096,
+    // assetsInlineLimit: 4096,
   },
   optimizeDeps: {
     include: [
