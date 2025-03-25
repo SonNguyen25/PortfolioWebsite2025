@@ -3,67 +3,58 @@ import React, { lazy, useEffect, useState } from "react";
 import "./Intro.scss";
 // import Lanyard from "../utils/Lanyard";
 
-
-
-
-
-const BlurText = lazy(() => import('../utils/BlurText'));
+const BlurText = lazy(() => import("../utils/BlurText"));
 
 const Intro = React.memo(() => {
-  const [imageSrc, setImageSrc] = useState('/eye.svg');
   const [startNonCritical, setStartNonCritical] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setStartNonCritical(true), 100);
-    return () => clearTimeout(timer);
+    setStartNonCritical(true);
   }, []);
- 
-   useEffect(() => {
-     const img = new Image();
-     img.src = "/noback9kv2-2-3 (2).png";
-     img.onload = () => {
-       setImageSrc("/noback9kv2-2-3 (2).png");
-     };
-   }, []);
- 
-  
-  const textVariants = React.useMemo(() => ({
-    initial: {
-      x: -500,
-      opacity: 0,
-    },
-    animate: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.1,
-      },
-    },
-    scrollAnimation: {
-      opacity: 0,
-      y: 10,
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-      },
-    },
-  }), []);
 
-  const sliderVariants = React.useMemo(() => ({ 
-    initial: {
-      x: 0,
-    },
-    animate: {
-      x: "-220%",
-      transition: {
-        duration: 20,
-        repeat: Infinity,
-        repeatType: "miror",
-        ease: "linear",
+  const textVariants = React.useMemo(
+    () => ({
+      initial: {
+        x: -500,
+        opacity: 0,
       },
-    },
-  }), []);
+      animate: {
+        x: 0,
+        opacity: 1,
+        transition: {
+          duration: 0.5,
+          staggerChildren: 0.1,
+        },
+      },
+      scrollAnimation: {
+        opacity: 0,
+        y: 10,
+        transition: {
+          duration: 2,
+          repeat: Infinity,
+        },
+      },
+    }),
+    []
+  );
+
+  const sliderVariants = React.useMemo(
+    () => ({
+      initial: {
+        x: 0,
+      },
+      animate: {
+        x: "-220%",
+        transition: {
+          duration: 20,
+          repeat: Infinity,
+          repeatType: "miror",
+          ease: "linear",
+        },
+      },
+    }),
+    []
+  );
 
   return (
     <div className="intro">
@@ -94,11 +85,11 @@ const Intro = React.memo(() => {
             <motion.button variants={textVariants}>Get in Touch</motion.button>
           </motion.div>
           {startNonCritical && (
-          <motion.img
-            variants={textVariants}
-            animate="scrollAnimation"
-            src="/scroll.png"
-            alt=""
+            <motion.img
+              variants={textVariants}
+              animate="scrollAnimation"
+              src="/scroll.png"
+              alt=""
             />
           )}
         </motion.div>
@@ -120,13 +111,13 @@ const Intro = React.memo(() => {
             src={"/noback9kv2-2-3 (2).png"}
             alt={""}
             loading="eager"
-            // decoding="async"
+            decoding="async"
           />
         </picture>
         {/* <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} /> */}
       </div>
     </div>
-   ); 
+  );
 });
 
 Intro.displayName = "Intro";

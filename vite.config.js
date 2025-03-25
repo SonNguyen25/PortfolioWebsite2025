@@ -95,7 +95,7 @@ export default defineConfig({
         unused: true,
         dead_code: true,
         reduce_vars: true,
-        passes: 2, 
+        passes: 3, 
         ecma: 2018, 
         toplevel: true, 
         module: true,
@@ -109,6 +109,9 @@ export default defineConfig({
       },
     },
     sourcemap: false,
+    cssCodeSplit: true,
+    cssMinify: true,
+    cssTarget: ["chrome90", "safari15", "ios14"],
     rollupOptions: {
       output: {
         manualChunks: {
