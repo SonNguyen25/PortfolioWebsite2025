@@ -106,14 +106,14 @@ export default defineConfig({
         //   framer: ['framer-motion'],
         // }
         manualChunks(id) {
-          if (
-            id.includes("node_modules/react") ||
-            id.includes("node_modules/react-dom") ||
-            id.includes("node_modules/scheduler") ||
-            id.includes("node_modules/use-sync-external-store")
-          ) {
-            return "react-vendor";
-          }
+          // if (
+          //   id.includes("node_modules/react") ||
+          //   id.includes("node_modules/react-dom") ||
+          //   id.includes("node_modules/scheduler") ||
+          //   id.includes("node_modules/use-sync-external-store")
+          // ) {
+          //   return "react-vendor";
+          // }
 
           // Three.js and related packages
           if (id.includes("node_modules/three")) {
