@@ -91,4 +91,11 @@ export default defineConfig({
       "@react-three/fiber",
     ],
   },
+  resolve: {
+    alias: {
+      'react': 'react',
+      'react-dom': 'react-dom',
+      'framer-motion': 'framer-motion'
+    }
+  },
 });
