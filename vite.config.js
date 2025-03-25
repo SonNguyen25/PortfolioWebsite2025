@@ -95,9 +95,17 @@ export default defineConfig({
         unused: true,
         dead_code: true,
         reduce_vars: true,
+        passes: 2, 
+        ecma: 2018, 
+        toplevel: true, 
+        module: true,
       },
       format: {
         comments: false,
+        ecma: 2018,
+      },
+      mangle: {
+        properties: false
       },
     },
     sourcemap: false,
@@ -105,19 +113,30 @@ export default defineConfig({
       output: {
         manualChunks: {
           // Bundle React and all related libraries together
-          'react-vendor': [
-            'react', 
-            'react-dom',
-            'react/jsx-runtime',
-            'scheduler',
-            'use-sync-external-store',
+          "react-vendor": [
+            "react",
+            "react-dom",
+            "react/jsx-runtime",
+            "scheduler",
+            "use-sync-external-store",
           ],
-          // Three.js in its own chunk
-          'three-vendor': ['three'],
-          // UI animation libraries
-          'animation': ['framer-motion'],
-          // React-three packages
-          'react-three': ['@react-three/drei', '@react-three/fiber'],
+          "three-core": ["three/src/Three.js"],
+          // Only bundle what's actually used
+          "three-extras": [
+            "three/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/controls/OrbitControls.js",
+            // Add other specific Three.js modules you use
+          ],
+          // Similarly for React-Three
+          "react-three-core": ["@react-three/fiber"],
+          "react-three-extras": ["@react-three/drei"],
+          // Animation libraries
+          animation: ["framer-motion"],
+        },
+        treeshake: {
+          moduleSideEffects: false,
+          propertyReadSideEffects: false,
+          tryCatchDeoptimization: false,
         },
         // manualChunks(id) {
         //   // if (
@@ -161,7 +180,7 @@ export default defineConfig({
     entryFileNames: "assets/[name]-[hash].js",
     chunkSizeWarningLimit: 500,
     assetsInlineLimit: 4096,
-    reportCompressedSize: false,
+    reportCompressedSize: true,
     dynamicImportVarsOptions: {
       exclude: [/node_modules/],
     },
