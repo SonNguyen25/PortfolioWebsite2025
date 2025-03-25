@@ -62,6 +62,7 @@ export default defineConfig({
         // }
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Big libraries get their own chunks
             if (id.includes('three') || 
                 id.includes('react-three') || 
                 id.includes('three-stdlib')) {
@@ -78,8 +79,7 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1500,
-    // assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
     include: [
@@ -87,8 +87,6 @@ export default defineConfig({
       "react-dom",
       "framer-motion",
       "three",
-      'react-three-fiber',
-      'three-stdlib',
       "@react-three/drei",
       "@react-three/fiber",
     ],
