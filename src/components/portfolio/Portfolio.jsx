@@ -1,8 +1,27 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import TrackVisibility from "react-on-screen";
 import "./Portfolio.scss";
 import ProjectCard from "./ProjectCard";
+
+const parseDate = (dateString) => {
+  const monthNames = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11,
+  };
+  const [month, year] = dateString.split(" ");
+  return new Date(parseInt(year), monthNames[month] ?? 0);
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,134 +44,148 @@ const Portfolio = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { margin: "-100px" });
 
-  const projects = [
-    {
-      title: "Epistorm Mobility Dashboard @NetSI",
-      description:
-        "A web-based analytics platform designed to visualize U.S. mobility, commuting, and contact patterns across multiple geographic levels (national, states, counties, CSAs, CBSAs). This tool was developed as part of my co-op at Network Science Institute and plays a crucial role in epidemiological research and public health analysis. You can access the dashboard by clicking the button below, but some features might be hidden, and only are exclusive to researchers.",
-      imgUrl: "/projects/epistorm.png",
-      category: "web",
-      techStack: "ReactJS, Node.js, Express, Google Big Query, Google Cloud Platform, Firebase, Zustand, Mapbox, HTML, CSS, JavaScript",
-      date: "December 2024",
-      link: "https://mobility-dashboard.xi-lab.io/home",
-      // github: "https://github.com/SonNguyen25/ImageProcessingApplication",
-    },
-    {
-      title: "EarthBeats - HackBeanpot 2025",
-      description:
-        "EarthBeats is your road trip companion that helps to minimizes carbon emissions and offers rewards! It suggests sustainable routes, connects travelers, and matches music to mood using voice analysis.",
-      imgUrl: "/projects/earthbeats.jpg",
-      category: "web",
-      techStack:
-        "Flask, ReactJS, Next.js, Node.js, Express, MongoDB, HTML, CSS, JavaScript, Python, TailwindCSS",
-      date: "February 2025",
-      link: "https://devpost.com/software/earthbeats",
-      github: "https://github.com/SonNguyen25/hackbeanpot-2025",
-    },
-    {
-      title: "Senzu - A Social Media Platform for Gymgoers",
-      description:
-        "A full-stack social media web app designed specifically for fitness enthusiasts. Users can create profiles, follow others, share workout posts, like and comment on content, and explore exercise routines powered by a third-party API with real-time search functionality. The platform features an intelligent chatbot assistant to help users navigate the app or discover workouts. Admins can manage user activity, including banning accounts or moderating posts, ensuring a safe and motivating community space for gymgoers.",
-      imgUrl: "/projects/senzu.png",
-      category: "web",
-      techStack: "React, Node.js, Express, MongoDB, HTML, CSS, JavaScript",
-      date: "March 2024",
-      link: "https://senzusocial.netlify.app/",
-      github: "https://github.com/SonNguyen25/senzu-frontend",
-    },
-    {
-      title: "VolunMint - ETHBoston 2024",
-      description:
-        "A digital platform powered by blockchain technology that enables users to contribute to social good while earning rewards.",
-      imgUrl: "/projects/volunmint.png",
-      category: "web",
-      techStack:
-        "Next.js, Solidity, Ethereum, Firebase, web3.js, Polygon, solidity-dapps",
-      date: "April 2024",
-      link: "https://devpost.com/software/socialcred/",
-      github: "https://github.com/SonNguyen25/VolunMint",
-    },
-    {
-      title: "ai4Career - innovAIte 2024",
-      description:
-        "AI4Career is a student for student project, it leverages cutting-edge AI technology to provide personalized, insightful career advice and academic planning support to students at crucial pathways of their educational journey. Targeted at high school students applying to university, first-year university students, and those uncertain about their career paths, AI4Career aims to demystify the process of making informed decisions regarding education and career.",
-      imgUrl: "/projects/ai4career.png",
-      category: "web",
-      techStack: "ReactJS, Node.js, Express, Firebase, HTML, CSS, Javascript",
-      date: "March 2024",
-      link: "https://github.com/SonNguyen25/ai4career",
-      // github: "https://github.com/SonNguyen25/ai4career",
-    },
-    {
-      title: "Image Processing App",
-      description:
-        "This program allows the user to process different image types with some basic commands. The currently supported image type is ppm, jpg, jpeg, png, bmp. And the program allows the user to change the brightness, flipping vertically or horizontally, downscaling, blur (Gaussian blur), sharpen, speia and greyscale (changing to greyscale different component ways). Partial Image Manipulation is also supported.",
-      imgUrl: "/projects/img.png",
-      category: "software",
-      techStack: "Java, Java Swing, Command-Line Interface",
-      date: "December 2021",
-      // link: "https://github.com/SonNguyen25/ImageProcessingApplication",
-      github: "https://github.com/SonNguyen25/ImageProcessingApplication",
-    },
-    {
-      title: "Equipment Management System",
-      description:
-        "A solo project in Java to solve management issues in British International School’s Art Department by keeping track and managing equipment loaning process.",
-      imgUrl: "/projects/equipmentmanagement.png",
-      category: "software",
-      techStack: "Java, Java Swing, SQL, Microsoft SQL Server, SQL Server Management Studio (SSMS)",
-      date: "May 2019",
-      link: "https://github.com/SonNguyen25/EquipmentManagementSystem",
-      // github: "https://github.com/SonNguyen25/ImageProcessingApplication",
-    },
-    {
-      title: "Kanbas - A Canvas Lookalike",
-      description:
-        "A website based on a popular online Learning Management System (LMS). It is used by learning institutions, educators, and students to access and manage online course materials and communicate about course-related topics.",
-      imgUrl: "/projects/kanbas.png",
-      category: "web",
-      techStack: "ReactJS, Node.js, Express, MongoDB, Redux, HTML, CSS, JavaScript",
-      date: "February 2024",
-      link: "https://a6--beautiful-pika-bb3cab.netlify.app/#/Kanbas/Dashboard",
-      github: "https://github.com/SonNguyen25/kanbas-react-web-app/tree/a6",
-    },
-    {
-      title: "Marble Solitaire Game",
-      description:
-        "A website based on a popular online Learning Management System (LMS). It is used by learning institutions, educators, and students to access and manage online course materials and communicate about course-related topics.",
-      imgUrl: "/projects/marblesolitaire.png",
-      category: "software",
-      techStack: "Java, Command-Line Interface",
-      date: "November 2021",
-      // link: "https://a6--beautiful-pika-bb3cab.netlify.app/#/Kanbas/Dashboard",
-      github: "https://github.com/SonNguyen25/marble-solitaire",
-    },
-  ];
+  const projects = useMemo(
+    () => [
+      {
+        title: "Epistorm Mobility Dashboard @NetSI",
+        description:
+          "A web-based analytics platform designed to visualize U.S. mobility, commuting, and contact patterns across multiple geographic levels (national, states, counties, CSAs, CBSAs). This tool was developed as part of my co-op at Network Science Institute and plays a crucial role in epidemiological research and public health analysis. You can access the dashboard by clicking the button below, but some features might be hidden, and only are exclusive to researchers.",
+        imgUrl: "/projects/epistorm.png",
+        category: "web",
+        techStack:
+          "ReactJS, Node.js, Express, Google Big Query, Google Cloud Platform, Firebase, Zustand, Mapbox, HTML, CSS, JavaScript",
+        date: "December 2024",
+        link: "https://mobility-dashboard.xi-lab.io/home",
+        // github: "https://github.com/SonNguyen25/ImageProcessingApplication",
+      },
+      {
+        title: "EarthBeats - HackBeanpot 2025",
+        description:
+          "EarthBeats is your road trip companion that helps to minimizes carbon emissions and offers rewards! It suggests sustainable routes, connects travelers, and matches music to mood using voice analysis.",
+        imgUrl: "/projects/earthbeats.jpg",
+        category: "web",
+        techStack:
+          "Flask, ReactJS, Next.js, Node.js, Express, MongoDB, HTML, CSS, JavaScript, Python, TailwindCSS",
+        date: "February 2025",
+        link: "https://devpost.com/software/earthbeats",
+        github: "https://github.com/SonNguyen25/hackbeanpot-2025",
+      },
+      {
+        title: "Senzu - A Social Media Platform for Gymgoers",
+        description:
+          "A full-stack social media web app designed specifically for fitness enthusiasts. Users can create profiles, follow others, share workout posts, like and comment on content, and explore exercise routines powered by a third-party API with real-time search functionality. The platform features an intelligent chatbot assistant to help users navigate the app or discover workouts. Admins can manage user activity, including banning accounts or moderating posts, ensuring a safe and motivating community space for gymgoers.",
+        imgUrl: "/projects/senzu.png",
+        category: "web",
+        techStack: "React, Node.js, Express, MongoDB, HTML, CSS, JavaScript",
+        date: "March 2024",
+        link: "https://senzusocial.netlify.app/",
+        github: "https://github.com/SonNguyen25/senzu-frontend",
+      },
+      {
+        title: "VolunMint - ETHBoston 2024",
+        description:
+          "A digital platform powered by blockchain technology that enables users to contribute to social good while earning rewards.",
+        imgUrl: "/projects/volunmint.png",
+        category: "web",
+        techStack:
+          "Next.js, Solidity, Ethereum, Firebase, web3.js, Polygon, solidity-dapps",
+        date: "April 2024",
+        link: "https://devpost.com/software/socialcred/",
+        github: "https://github.com/SonNguyen25/VolunMint",
+      },
+      {
+        title: "ai4Career - innovAIte 2024",
+        description:
+          "AI4Career is a student for student project, it leverages cutting-edge AI technology to provide personalized, insightful career advice and academic planning support to students at crucial pathways of their educational journey. Targeted at high school students applying to university, first-year university students, and those uncertain about their career paths, AI4Career aims to demystify the process of making informed decisions regarding education and career.",
+        imgUrl: "/projects/ai4career.png",
+        category: "web",
+        techStack: "ReactJS, Node.js, Express, Firebase, HTML, CSS, Javascript",
+        date: "March 2024",
+        link: "https://github.com/SonNguyen25/ai4career",
+        // github: "https://github.com/SonNguyen25/ai4career",
+      },
+      {
+        title: "Image Processing App",
+        description:
+          "This program allows the user to process different image types with some basic commands. The currently supported image type is ppm, jpg, jpeg, png, bmp. And the program allows the user to change the brightness, flipping vertically or horizontally, downscaling, blur (Gaussian blur), sharpen, speia and greyscale (changing to greyscale different component ways). Partial Image Manipulation is also supported.",
+        imgUrl: "/projects/img.png",
+        category: "software",
+        techStack: "Java, Java Swing, Command-Line Interface",
+        date: "December 2021",
+        // link: "https://github.com/SonNguyen25/ImageProcessingApplication",
+        github: "https://github.com/SonNguyen25/ImageProcessingApplication",
+      },
+      {
+        title: "Equipment Management System",
+        description:
+          "A solo project in Java to solve management issues in British International School’s Art Department by keeping track and managing equipment loaning process.",
+        imgUrl: "/projects/equipmentmanagement.png",
+        category: "software",
+        techStack:
+          "Java, Java Swing, SQL, Microsoft SQL Server, SQL Server Management Studio (SSMS)",
+        date: "May 2019",
+        link: "https://github.com/SonNguyen25/EquipmentManagementSystem",
+        // github: "https://github.com/SonNguyen25/ImageProcessingApplication",
+      },
+      {
+        title: "Kanbas - A Canvas Lookalike",
+        description:
+          "A website based on a popular online Learning Management System (LMS). It is used by learning institutions, educators, and students to access and manage online course materials and communicate about course-related topics.",
+        imgUrl: "/projects/kanbas.png",
+        category: "web",
+        techStack:
+          "ReactJS, Node.js, Express, MongoDB, Redux, HTML, CSS, JavaScript",
+        date: "February 2024",
+        link: "https://a6--beautiful-pika-bb3cab.netlify.app/#/Kanbas/Dashboard",
+        github: "https://github.com/SonNguyen25/kanbas-react-web-app/tree/a6",
+      },
+      {
+        title: "Marble Solitaire Game",
+        description:
+          "A website based on a popular online Learning Management System (LMS). It is used by learning institutions, educators, and students to access and manage online course materials and communicate about course-related topics.",
+        imgUrl: "/projects/marblesolitaire.png",
+        category: "software",
+        techStack: "Java, Command-Line Interface",
+        date: "November 2021",
+        // link: "https://a6--beautiful-pika-bb3cab.netlify.app/#/Kanbas/Dashboard",
+        github: "https://github.com/SonNguyen25/marble-solitaire",
+      },
+    ],
+    []
+  );
+
+  const filteredProjects = useMemo(
+    () =>
+      projects
+        .filter((p) => activeTab === "all" || p.category === activeTab)
+        .sort((a, b) => parseDate(b.date) - parseDate(a.date)),
+    [projects, activeTab]
+  );
 
   // parse the date format
-  const parseDate = (dateString) => {
-    const monthNames = {
-      January: 0,
-      February: 1,
-      March: 2,
-      April: 3,
-      May: 4,
-      June: 5,
-      July: 6,
-      August: 7,
-      September: 8,
-      October: 9,
-      November: 10,
-      December: 11,
-    };
+  // const parseDate = (dateString) => {
+  //   const monthNames = {
+  //     January: 0,
+  //     February: 1,
+  //     March: 2,
+  //     April: 3,
+  //     May: 4,
+  //     June: 5,
+  //     July: 6,
+  //     August: 7,
+  //     September: 8,
+  //     October: 9,
+  //     November: 10,
+  //     December: 11,
+  //   };
 
-    const [month, year] = dateString.split(" ");
-    return new Date(parseInt(year), monthNames[month] || 0); 
-  };
+  //   const [month, year] = dateString.split(" ");
+  //   return new Date(parseInt(year), monthNames[month] || 0);
+  // };
 
-  const filteredProjects = projects
-    .filter((proj) => activeTab === "all" || proj.category === activeTab)
-    .sort((a, b) => parseDate(b.date) - parseDate(a.date));
+  // const filteredProjects = projects
+  //   .filter((proj) => activeTab === "all" || proj.category === activeTab)
+  //   .sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
   const openModal = (project, e) => {
     const cardElement = e.currentTarget;
@@ -196,7 +229,16 @@ const Portfolio = () => {
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   <div className="image-wrapper">
-                    <img src="/exhibition.jpg" alt="Exhibitions" />
+                    {/* <img src="/exhibition.jpg" alt="Exhibitions" /> */}
+                    <picture>
+                      <source srcSet={"/exhibition.jpg"} type="image/webp" />
+                      <img
+                        src={"/exhibition.jpg"}
+                        alt={""}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                     <div className="image-overlay"></div>
                   </div>
                   <h1>

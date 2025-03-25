@@ -27,7 +27,7 @@ $neon-pink: rgba(255, 0, 255, 0.7);
 .intro {
   height: calc(100vh - 100px);
   overflow: hidden;
-  background: linear-gradient(180deg, $dark-purple-1, $dark-purple-2);
+  // background: linear-gradient(180deg, $dark-purple-1, $dark-purple-2);
   position: relative;
 
   background-image: linear-gradient(

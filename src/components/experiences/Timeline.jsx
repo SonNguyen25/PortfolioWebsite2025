@@ -116,17 +116,21 @@ export const Timeline = ({ experiences, openModal }) => {
               initial="hidden"
               whileInView="visible"
             >
-              <motion.img
-                src={exp.logo}
-                alt={exp.company}
-                className={`timeline-logo ${
-                  exp.logo === "/netsilogo.png" ? "netsi-logo" : ""
-                }`}
-                // style={{
-                //   backgroundColor:
-                //     exp.logo === "/netsilogo.png" ? "black" : undefined,
-                // }}
-              />
+              <picture>
+                <source srcSet={exp.logo} type="image/webp" />
+                <motion.img
+                  src={exp.logo}
+                  alt={exp.company}
+                  className={`timeline-logo ${
+                    exp.logo === "/netsilogo.png" ? "netsi-logo" : ""
+                  }`}
+                  // style={{
+                  //   backgroundColor:
+                  //     exp.logo === "/netsilogo.png" ? "black" : undefined,
+                  // }}
+                  loading="lazy" decoding="async"
+                />
+              </picture>
             </motion.div>
             <motion.div
               className="timeline-branch"
@@ -145,7 +149,9 @@ export const Timeline = ({ experiences, openModal }) => {
             >
               <h2>{exp.title}</h2>
               <p className="timeline-company-name">{exp.company}</p>
-              <p className="timeline-synopsis">{exp.synopsis.substring(0, 100)}...</p>
+              <p className="timeline-synopsis">
+                {exp.synopsis.substring(0, 100)}...
+              </p>
               <button>Learn More</button>
             </motion.div>
           </div>

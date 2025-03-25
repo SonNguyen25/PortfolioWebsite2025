@@ -208,7 +208,14 @@ const Experiences = () => {
       </motion.div>
       <motion.div className="title-container" variants={variants}>
         <div className="title">
-          <img src="/people.webp" alt="" />
+          {/* <img src="/people.webp" alt="" /> */}
+          <picture>
+          <source
+            srcSet={"/people.webp"}
+            type="image/webp"
+          />
+          <img src={"/people.webp"} alt={""} loading="lazy" decoding="async" />
+        </picture>
           <h1>
             <motion.b
               whileHover={{

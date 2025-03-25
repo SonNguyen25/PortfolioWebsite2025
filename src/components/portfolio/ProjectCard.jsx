@@ -17,7 +17,14 @@ const ProjectCard = ({ title, description, imgUrl, techStack, onClick }) => {
       transition={{ duration: 0.3 }}
     >
       <div className="project-card-img">
-        <img src={imgUrl || "/placeholder.svg"} alt={title} />
+        {/* <img src={imgUrl || "/placeholder.svg"} alt={title} /> */}
+        <picture>
+          <source
+            srcSet={imgUrl || "/placeholder.svg" }
+            type="image/webp"
+          />
+          <img src={imgUrl} alt={title} loading="lazy" decoding="async" />
+        </picture>
         <motion.div
           className="project-card-overlay"
           initial={{ opacity: 0 }}
