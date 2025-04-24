@@ -107,9 +107,9 @@ const Footer = () => {
 
           <motion.div className="footer-contact" variants={itemVariants}>
             <h3>Get In Touch</h3>
-            <a href="mailto:contact@yourname.com" className="email-link">
+            <a href="mailto:nguyen.so@northeastern.edu" className="email-link">
               <HiMail className="email-icon" />
-              <span>contact@yourname.com</span>
+              <span>Contact Me!</span>
             </a>
             <p className="location">Based in Boston, MA</p>
           </motion.div>
